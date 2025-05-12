@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+
 public static class Divisors {
     /// <summary>
     /// Entry point for the Divisors class
@@ -17,8 +19,14 @@ public static class Divisors {
     /// <param name="number">The number to find the divisor</param>
     /// <returns>List of divisors</returns>
     private static List<int> FindDivisors(int number) {
-        List<int> results = new();
-        // TODO problem 1
-        return results;
+        List<int> result = new(); 
+        for (int i = 2; i <= number; i++) {
+            if (number % i == 0) {
+                result.Add(i);
+ 
+            }
+        }
+        return result;
     }
+    
 }
