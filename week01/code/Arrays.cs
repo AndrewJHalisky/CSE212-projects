@@ -1,5 +1,9 @@
 using System.ComponentModel;
 using System.Globalization;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 public static class Arrays
 {
@@ -11,12 +15,6 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     ///
     /// My plan for this project is to implement the MultiplesOf function by return a list of multiples and how many you can get in a set.
-    
-    public static void Run(string[] args) {
-        List<int> data = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        RotateListRight(data, 3);
-        Console.WriteLine(string.Join(", ", data));
-    }
     public static double[] MultiplesOf(double number, int length)
     {
         // TODO Problem 1 Start
@@ -25,13 +23,14 @@ public static class Arrays
         // be implemented by another person.
 
         // First, I will create a list of integers that repeat themselves
-        List<double> multiples = new List<double>();
+        double[] result = new double[length];
         // Then, I will create a for loop to implement
-            for (int i = 1; i <= length; i++) {
-                multiples.Add(i * number);
-            }
+        for (int i = 1; i <= length; i++)
+        {
+            result[i] = (i + 1) * number;
+        }
         // Next I will return the multiples (integers) that were implemented
-        return multiples.ToArray(); // replace this return statement with your own
+        return result; // replace this return statement with your own
     }
     /// <summary>
     /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
@@ -40,21 +39,39 @@ public static class Arrays
     ///
     /// Because a list is dynamic, this function will modify the existing data list rather than returning a new list.
     /// </summary>
-    public static void RotateListRight(List<int> data, int amount)
+    public static void RotateListRight(List<int> arr, int amount)
     {
         // TODO Problem 2 Start
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
-        
-        // For this function, first I will call an integer for the list of chunks
-        List<List<int>> chunks = new List<List<int>>();
-        for (int i = 0; i < data.Count; i += 3) {
-            // Then I will call an int variable to get the data count and implement it through there.
-            int count = Math.Min(3, data.Count - i);
-            // Next I will add the chunks to the name of the list
-            List<int> chunk = data.GetRange(i, count);
-            chunks.Add(chunk);
+
+        // // For this function, first I will call an integer for the list of chunks
+        // List<List<int>> chunks = new List<List<int>>();
+        // for (int i = 0; i < data.Count; i += 3) {
+        //     // Then I will call an int variable to get the data count and implement it through there.
+        //     int count = Math.Min(3, data.Count - i);
+        //     // Next I will add the chunks to the name of the list
+        //     List<int> chunk = data.GetRange(i, count);
+        //     chunks.Add(chunk);
+        // }
+        // For this function, first I will call an n integer variable to get the count
+        int n = arr.Count;
+        if( n == 0 || amount % n == 0) return;
+
+        amount %= n;
+        Reverse(arr, 0, n - 1);
+        Reverse(arr, 0, amount - 1);
+        Reverse(arr, amount, n - 1);
+    }
+    
+    private static void Reverse(List<int> list, int start, int end) {
+        while (start < end) {
+            int temp = list[start];
+            list[start] = list[end];
+            list[end] = temp;
+            start++;
+            end--;
         }
     }
 }
