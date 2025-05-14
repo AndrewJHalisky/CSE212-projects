@@ -22,7 +22,7 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        // First, I will create a list of integers that repeat themselves
+        // First, I will create a double variable to call the amount of integers
         double[] result = new double[length];
         // Then, I will create a for loop to implement
         for (int i = 1; i <= length; i++)
@@ -59,15 +59,20 @@ public static class Arrays
         int n = arr.Count;
         if( n == 0 || amount % n == 0) return;
 
+        // Next I will implement the amount using the %= operator
         amount %= n;
+        // Finally, I will call in the reverse function in three ways from below to get the amount in reverse
         Reverse(arr, 0, n - 1);
         Reverse(arr, 0, amount - 1);
         Reverse(arr, amount, n - 1);
     }
     
     private static void Reverse(List<int> list, int start, int end) {
+        // For this function, I will call in a while loop to create a start point
         while (start < end) {
+            // Then, I will use a tuple to swap the integers from each pattern
             int temp = list[start];
+            // Next, I will call when the pattern will start and when it will end in each list.
             list[start] = list[end];
             list[end] = temp;
             start++;
