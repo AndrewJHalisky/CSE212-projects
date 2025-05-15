@@ -14,6 +14,8 @@ public class CustomerService {
         // Scenario: 
         // Expected Result: 
         Console.WriteLine("Test 1");
+        var cs1 = new CustomerService(-1);
+        Console.WriteLine();
 
         // Defect(s) Found: 
 
