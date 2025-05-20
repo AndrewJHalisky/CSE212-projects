@@ -1,9 +1,10 @@
+
 /// <summary>
 /// A basic implementation of a Queue
 /// </summary>
 public class PersonQueue
 {
-    private readonly List<Person> _queue = new();
+    private readonly List<Person> _queue = new List<Person>();
 
     public int Length => _queue.Count;
 
@@ -26,6 +27,15 @@ public class PersonQueue
     public bool IsEmpty()
     {
         return Length == 0;
+    }
+
+    internal Person Peek()
+    {
+        if (_queue.Count == 0)
+        {
+            throw new InvalidOperationException("Cannot peek from an empty queue.");
+        }
+        return _queue[0];
     }
 
     public override string ToString()

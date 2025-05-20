@@ -12,7 +12,21 @@ public class PriorityQueueTests
     public void TestPriorityQueue_1()
     {
         var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
+
+        priorityQueue.Enqueue("Bob", 2);
+        priorityQueue.Enqueue("Tim", 5);
+        priorityQueue.Enqueue("Sue", 3);
+
+        var first = priorityQueue.Dequeue();
+        Assert.AreEqual("Bob", first.Name);
+
+        var second = priorityQueue.Dequeue();
+        Assert.AreEqual("Tim", second.Name);
+
+        var third = priorityQueue.Dequeue();
+        Assert.AreEqual("Sue", third.Name);
+        
+        Assert.IsTrue(priorityQueue.IsEmpty());
     }
 
     [TestMethod]
@@ -22,7 +36,21 @@ public class PriorityQueueTests
     public void TestPriorityQueue_2()
     {
         var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
+
+        priorityQueue.Enqueue("Bob", 2);
+        priorityQueue.Enqueue("Tim", 5);
+        priorityQueue.Enqueue("Sue", 3);
+        
+        var first = priorityQueue.Dequeue();
+        Assert.AreEqual("Bob", first.Name);
+
+        var second = priorityQueue.Dequeue();
+        Assert.AreEqual("Tim", second.Name);
+
+        var third = priorityQueue.Dequeue();
+        Assert.AreEqual("Sue", third.Name);
+
+        Assert.IsTrue(priorityQueue.IsEmpty());
     }
 
     // Add more test cases as needed below.

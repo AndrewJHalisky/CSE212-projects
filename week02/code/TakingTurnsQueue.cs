@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Diagnostics;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 /// <summary>
 /// This queue is circular.  When people are added via AddPerson, then they are added to the 
 /// back of the queue (per FIFO rules).  When GetNextPerson is called, the next person
@@ -10,7 +13,7 @@
 public class TakingTurnsQueue
 {
     private readonly PersonQueue _people = new();
-
+    private Queue<Person> _queue = new Queue<Person>();
     public int Length => _people.Length;
 
     /// <summary>
@@ -21,7 +24,7 @@ public class TakingTurnsQueue
     public void AddPerson(string name, int turns)
     {
         var person = new Person(name, turns);
-        _people.Enqueue(person);
+        _queue.Enqueue(person);
     }
 
     /// <summary>
@@ -37,21 +40,32 @@ public class TakingTurnsQueue
         {
             throw new InvalidOperationException("No one in the queue.");
         }
-        else
+        Person person = _people.Peek();
+        Debug.WriteLine($"Person: {person.Name}, Turns before: {person.Turns}");
+        if (person.Turns == 0)
         {
-            Person person = _people.Dequeue();
-            if (person.Turns > 1)
-            {
-                person.Turns -= 1;
-                _people.Enqueue(person);
-            }
-
+            _queue.Enqueue(person);
             return person;
         }
+        person.Turns--;
+        if (person.Turns > 0)
+        {
+            _queue.Enqueue(person);
+        }   
+        return person;
     }
 
     public override string ToString()
     {
         return _people.ToString();
     }
+    
+    internal Person Peek()
+    {
+        if (_queue.Count > 0)
+            return _queue.Peek();
+        else
+            return null;
+    }
+
 }
