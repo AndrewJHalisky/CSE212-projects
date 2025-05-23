@@ -1,16 +1,10 @@
 
 using Microsoft.VisualBasic;
 
-public class Person
+public class Person(string name, int turns)
 {
-    public string Name { get; }
-    public int Turns { get; }
-
-    public Person(string name, int turns)
-    {
-        Name = name;
-        Turns = turns;
-    }
+    public string Name { get; } = name;
+    public int Turns { get; } = turns;
 
     public override string ToString()
     {

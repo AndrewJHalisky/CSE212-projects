@@ -44,16 +44,10 @@ public class PriorityQueue
         return _queue.Count == 0;
     }
 }
-internal class PriorityItem
+internal class PriorityItem (string value, int priority)
 {
-    internal string Value { get; set; }
-    internal int Priority { get; set; }
-
-    public PriorityItem(string value, int priority)
-    {
-        Value = value;
-        Priority = priority;
-    }
+    internal string Value { get; set; } = value;
+    internal int Priority { get; set; } = priority;
 
     public override string ToString()
     {

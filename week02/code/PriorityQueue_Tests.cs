@@ -9,7 +9,7 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: Test the queue to make sure it enqueues the names in the correct order, then dequeues it to make sure they work.
     // Expected Result: Nothing to show, but it shows that they enqueued and dequeued correcty.
-    // Defect(s) Found: 
+    // Defect(s) Found: When the test fails, it shows that the queue was not handled in the code, meaning that is was empty.
     public void TestPriorityQueue_DequeueCorrectOrder()
     {
         var priorityQueue = new PriorityQueue();
@@ -33,7 +33,7 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: Makes sure that the name at the front of the queue was removed, then that name will be displayed
     // Expected Result: Before removal: Bob Sue Tim  Removed item: Bob  After removal: Sue Tim 
-    // Defect(s) Found: 
+    // Defect(s) Found: When it fails, it shows that the queue was not modified in the code and that the code failed to remove the item.
     public void TestPriorityQueue_RemoveItemClosetToFront()
     {
         var priorityQueue = new PriorityQueue<string, int>();
@@ -55,7 +55,7 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: Removes the person in the list that has the highest priority number. Then displays that person with their number.
     // Expected Result: Removed Tim from the list. Max number was 5
-    // Defect(s) Found: 
+    // Defect(s) Found: When the test fails, it states that the top priority number was not recognized in the List due to a int variable being called something different.
     public void TestPriorityQueue_RemoveHighestPriority()
     {
         var people = new List<(string Name, int Priority)>
@@ -74,7 +74,7 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: Makes sure that if there is an error in the queue, it displays a message saying that it cannot be empty.
     // Expected Result: Error: Cannot dequeue due to empty queue.
-    // Defect(s) Found: 
+    // Defect(s) Found: When the test fails, it does not recognize the error due to the person still being listed in the queue.
     public void TestPriorityQueue_CatchErrorIfEmpty()
     {
         var priorityQueue = new PriorityQueue<string, int>();
