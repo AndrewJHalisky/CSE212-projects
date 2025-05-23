@@ -3,10 +3,10 @@ using Microsoft.VisualBasic;
 
 public class Person
 {
-    public string Name { get; set; }
-    public int Turns { get; set; }
+    public string Name { get; }
+    public int Turns { get; }
 
-    internal Person(string name, int turns)
+    public Person(string name, int turns)
     {
         Name = name;
         Turns = turns;

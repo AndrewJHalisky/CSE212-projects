@@ -16,10 +16,9 @@ public class PriorityQueue
     {
         var newNode = new PriorityItem(person, priority);
         _queue.Add(newNode);
-        _queue = _queue.OrderBy(p => p.Priority).ToList();
     }
 
-    public Person Dequeue()
+    public string Dequeue()
     {
         // Find the index of the item with the highest priority to remove
         var highPriorityIndex = 0;
@@ -44,26 +43,15 @@ public class PriorityQueue
     {
         return _queue.Count == 0;
     }
-
-
 }
-
 internal class PriorityItem
 {
-    private string person;
-
-    internal Person Value { get; set; }
+    internal string Value { get; set; }
     internal int Priority { get; set; }
 
-    internal PriorityItem(Person value, int priority)
+    public PriorityItem(string value, int priority)
     {
         Value = value;
-        Priority = priority;
-    }
-
-    public PriorityItem(string person, int priority)
-    {
-        this.person = person;
         Priority = priority;
     }
 

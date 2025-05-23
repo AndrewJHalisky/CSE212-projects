@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Diagnostics;
+using System.Security;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 /// <summary>
 /// This queue is circular.  When people are added via AddPerson, then they are added to the 
@@ -14,6 +15,7 @@ public class TakingTurnsQueue
 {
     private readonly PersonQueue _people = new();
     private Queue<Person> _queue = new Queue<Person>();
+
     public int Length => _people.Length;
 
     /// <summary>
@@ -34,32 +36,34 @@ public class TakingTurnsQueue
     /// person has an infinite number of turns.  An error exception is thrown 
     /// if the queue is empty.
     /// </summary>
-    public Person GetNextPerson()
-    {
-        if (_people.IsEmpty())
-        {
-            throw new InvalidOperationException("No one in the queue.");
-        }
-        Person person = _people.Peek();
-        Debug.WriteLine($"Person: {person.Name}, Turns before: {person.Turns}");
-        if (person.Turns == 0)
-        {
-            _queue.Enqueue(person);
-            return person;
-        }
-        person.Turns--;
-        if (person.Turns > 0)
-        {
-            _queue.Enqueue(person);
-        }   
-        return person;
-    }
 
     public override string ToString()
     {
         return _people.ToString();
     }
-    
+
+    public Person GetNextPerson()
+    {
+        if (_queue.Count == 0)
+            throw new InvalidOperationException("No one in the queue.");
+
+        var person = _queue.Dequeue();
+
+        if (person.Turns <= 0)
+        {
+            _queue.Enqueue(person);
+        }
+        else
+        {
+            int remainingTurns = person.Turns - 1;
+            if (remainingTurns > 0)
+            {
+                _queue.Enqueue(new Person(person.Name, remainingTurns));
+            }
+        }
+        return person;
+    }
+
     internal Person Peek()
     {
         if (_queue.Count > 0)
