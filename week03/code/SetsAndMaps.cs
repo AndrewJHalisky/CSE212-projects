@@ -1,4 +1,8 @@
+using System.Diagnostics;
+using System.IO.Pipes;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
+using Microsoft.VisualBasic;
 
 public static class SetsAndMaps
 {
@@ -22,7 +26,34 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var wordSet = new HashSet<string>(words);
+        var result = new List<string>();
+        var addedPairs = new HashSet<string>();
+        foreach (var word in words)
+        {
+            var reversed = ReverseWord(word);
+            if (wordSet.Contains(reversed) && word != reversed)
+            {
+                var first = word.CompareTo(reversed) < 0 ? word : reversed;
+                var second = word.CompareTo(reversed) < 0 ? reversed : word;
+                var pair = $"{first}&{second} ";
+
+                if (!addedPairs.Contains(pair))
+                {
+                    addedPairs.Add(pair);
+                    result.Add(pair);
+                }
+            }
+        }
+
+        return result.ToArray();
+    }
+
+    public static string ReverseWord(string word)
+    {
+        var chars = word.ToCharArray();
+        Array.Reverse(chars);
+        return new string(chars);
     }
 
     /// <summary>
@@ -41,10 +72,16 @@ public static class SetsAndMaps
         var degrees = new Dictionary<string, int>();
         foreach (var line in File.ReadLines(filename))
         {
-            var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
-        }
+            var parts = line.Split(',');
+            // TODO Problem 2 - ADD YOUR CODE HER 
+            if (parts.Length < 2) continue;
+            string degree = parts[3].Trim();
+            if (degrees.ContainsKey(degree))
+                degrees[degree]++;
+            else
+                degrees[degree] = 1;
 
+        }
         return degrees;
     }
 
@@ -67,9 +104,22 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
-    }
+        word1 = word1.ToLower().Replace(" ", "");
+        word2 = word2.ToLower().Replace(" ", "");
+        if (word1.Length != word2.Length)
+            return false;
+        char[] charArray1 = word1.ToCharArray();
+        char[] charArray2 = word2.ToCharArray();
+        Array.Sort(charArray1);
+        Array.Sort(charArray2);
 
+        for (int i = 0; i < word1.Length; i++)
+        {
+            if (charArray1[i] != charArray2[i])
+                return false;
+        }
+        return true;
+    }
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
     /// United States Geological Service (USGS) consisting of earthquake data.
@@ -93,14 +143,22 @@ public static class SetsAndMaps
         using var reader = new StreamReader(jsonStream);
         var json = reader.ReadToEnd();
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
-
         // TODO Problem 5:
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+        var results = new List<string>();
+        foreach (var feature in featureCollection.features)
+        {
+            if (feature.properties != null)
+            {
+                double mag = feature.properties.Mag;
+                string place = feature.properties.place;
+                results.Add($"{place} - Mag {mag}");
+            }
+        }
+        return results.ToArray();
     }
 }
