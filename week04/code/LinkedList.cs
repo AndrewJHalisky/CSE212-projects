@@ -33,8 +33,21 @@ public class LinkedList : IEnumerable<int>
     public void InsertTail(int value)
     {
         // TODO Problem 1
-    }
+        Node newNode = new(value);
 
+        if (_tail is null)
+        {
+            _head = newNode;
+            _tail = newNode;
+        }
+        // If the list is not empty, then only tail will be affected
+        else
+        {
+            newNode.Next = _tail;
+            _tail.Prev = newNode;
+            _tail = newNode;
+        }
+    }
 
     /// <summary>
     /// Remove the first node (i.e. the head) of the linked list.
@@ -168,8 +181,10 @@ public class LinkedList : IEnumerable<int>
     }
 }
 
-public static class IntArrayExtensionMethods {
-    public static string AsString(this IEnumerable array) {
+public static class IntArrayExtensionMethods
+{
+    public static string AsString(this IEnumerable array)
+    {
         return "<IEnumerable>{" + string.Join(", ", array.Cast<int>()) + "}";
     }
 }
