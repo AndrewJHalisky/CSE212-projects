@@ -113,7 +113,7 @@ public class RemoveTests
         Assert.AreEqual("<LinkedList>{}", ll.ToString());
         Assert.IsTrue(ll.HeadAndTailAreNull());
     }
-
+    
     [TestMethod]
     public void Remove_Single()
     {
