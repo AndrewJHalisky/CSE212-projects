@@ -155,25 +155,31 @@ public static class Recursion
     /// Using recursion, insert all possible binary strings for a given pattern into the results list.  You might find 
     /// some of the string functions like IndexOf and [..X] / [X..] to be useful in solving this problem.
     /// </summary>
-    public static void WildcardBinary(string pattern, List<string> results, int start, int end)
+    public static void WildcardBinary(string pattern, List<string> results)
     {
         // TODO Start Problem 4
+        WildcardBinaryStartFinish(pattern, results, 0, pattern.Length - 1);
+    }
+    private static void WildcardBinaryStartFinish(string pattern, List<string> results, int start, int end)
+    {
         if (start > end)
         {
             results.Add(pattern);
             return;
         }
-        if (pattern[start] <= 1)
+        if (pattern[start] != '?' && pattern[start] != '*')
         {
-            int next = start + 1;
+            WildcardBinaryStartFinish(pattern, results, start + 1, end);
             return;
         }
-        char[] chars = pattern.ToCharArray();
+        char[] chars0 = pattern.ToCharArray();
+        chars0[start] = '0';
+        WildcardBinaryStartFinish(new string(chars0), results, start + 1, end);
 
-        chars[start] = '0';
-        WildcardBinary(new string(chars), results, start + 1, end);
+        char[] chars1 = pattern.ToCharArray();
+        chars1[start] = '1';
+        WildcardBinaryStartFinish(new string(chars1), results, start + 1, end);
     }
-
     /// <summary>
     /// Use recursion to insert all paths that start at (0,0) and end at the
     /// 'end' square into the results list.

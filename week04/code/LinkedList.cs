@@ -1,4 +1,11 @@
 using System.Collections;
+using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
+using System.Data;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Transactions;
+using NuGet.Frameworks;
 
 public class LinkedList : IEnumerable<int>
 {
@@ -43,8 +50,8 @@ public class LinkedList : IEnumerable<int>
         // If the list is not empty, then only tail will be affected
         else
         {
-            newNode.Next = _tail;
-            _tail.Prev = newNode;
+            newNode.Prev = _tail;
+            _tail.Next = newNode;
             _tail = newNode;
         }
     }
@@ -77,6 +84,7 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void RemoveTail()
     {
+        // TODO Problem 2
         if (_tail == _head)
         {
             _head = null;
@@ -130,6 +138,9 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void Remove(int value)
     {
+        // TODO Problem 3
+        // Check if head and tail is empty
+        // Traverse through the list to remove the node
         Node? curr = _head;
         while (curr != null)
         {
@@ -166,13 +177,13 @@ public class LinkedList : IEnumerable<int>
         }
     }
 
-
     /// <summary>
     /// Search for all instances of 'oldValue' and replace the value to 'newValue'.
     /// </summary>
     public void Replace(int oldValue, int newValue)
     {
         Node? curr = _head;
+        // TODO Problem 4
         while (curr is not null)
         {
             if (curr.Value == oldValue)
