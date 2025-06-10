@@ -1,4 +1,11 @@
 using System.Collections;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.VisualStudio.TestPlatform.CoreUtilities.Extensions;
+using NuGet.Frameworks;
 
 public static class Recursion
 {
@@ -15,7 +22,19 @@ public static class Recursion
     public static int SumSquaresRecursive(int n)
     {
         // TODO Start Problem 1
-        return 0;
+        if (n == 1)
+        {
+            return 1;
+        }
+        else if (n <= 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return (n * n) + SumSquaresRecursive(n - 1);
+        }
+
     }
 
     /// <summary>
@@ -40,6 +59,17 @@ public static class Recursion
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
         // TODO Start Problem 2
+        if (word.Length == size)
+        {
+            results.Add(word);
+        }
+        for (int i = 0; i < letters.Length; i++)
+        {
+            char letter = letters[i];
+            string remaining = letters.Remove(i, 1);
+            string nextWord = word + letter;
+            PermutationsChoose(results, remaining, size, nextWord);
+        }
     }
 
     /// <summary>
@@ -97,10 +127,19 @@ public static class Recursion
             return 4;
 
         // TODO Start Problem 3
-
+        remember ??= new Dictionary<int, decimal>();
+        if (remember.ContainsKey(s))
+        {
+            return remember[s];
+        }
+        else
+        {
+            decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
+            remember[s] = ways;
+            return ways;
+        }
         // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
-        return ways;
+
     }
 
     /// <summary>
@@ -116,9 +155,23 @@ public static class Recursion
     /// Using recursion, insert all possible binary strings for a given pattern into the results list.  You might find 
     /// some of the string functions like IndexOf and [..X] / [X..] to be useful in solving this problem.
     /// </summary>
-    public static void WildcardBinary(string pattern, List<string> results)
+    public static void WildcardBinary(string pattern, List<string> results, int start, int end)
     {
         // TODO Start Problem 4
+        if (start > end)
+        {
+            results.Add(pattern);
+            return;
+        }
+        if (pattern[start] <= 1)
+        {
+            int next = start + 1;
+            return;
+        }
+        char[] chars = pattern.ToCharArray();
+
+        chars[start] = '0';
+        WildcardBinary(new string(chars), results, start + 1, end);
     }
 
     /// <summary>
@@ -129,10 +182,11 @@ public static class Recursion
     {
         // If this is the first time running the function, then we need
         // to initialize the currPath list.
-        if (currPath == null) {
+        if (currPath == null)
+        {
             currPath = new List<ValueTuple<int, int>>();
         }
-        
+
         // currPath.Add((1,2)); // Use this syntax to add to the current path
 
         // TODO Start Problem 5
