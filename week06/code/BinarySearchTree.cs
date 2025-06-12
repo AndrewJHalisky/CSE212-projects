@@ -4,12 +4,14 @@ public class BinarySearchTree : IEnumerable<int>
 {
     private Node? _root;
 
+
     /// <summary>
     /// Insert a new node in the BST.
     /// </summary>
     public void Insert(int value)
     {
         // Create new node
+        // Update this to only get unique values
         Node newNode = new(value);
         // If the list is empty, then point both head and tail to the new node.
         if (_root is null)
@@ -21,6 +23,7 @@ public class BinarySearchTree : IEnumerable<int>
         {
             _root.Insert(value);
         }
+
     }
 
     /// <summary>
@@ -99,8 +102,10 @@ public class BinarySearchTree : IEnumerable<int>
     }
 }
 
-public static class IntArrayExtensionMethods {
-    public static string AsString(this IEnumerable array) {
+public static class IntArrayExtensionMethods
+{
+    public static string AsString(this IEnumerable array)
+    {
         return "<IEnumerable>{" + string.Join(", ", array.Cast<int>()) + "}";
     }
 }
